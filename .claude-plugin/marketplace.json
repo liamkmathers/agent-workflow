@@ -6,7 +6,7 @@
       "name": "agent-workflow",
       "source": "./plugins/agent-workflow",
       "description": "Task-file to PR workflow for Claude Code: plan gate, completion gate, fresh-context tests and review, status feed.",
-      "version": "0.1.0"
+      "version": "0.1.1"
     }
   ]
 }

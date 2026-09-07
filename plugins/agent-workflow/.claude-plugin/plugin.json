@@ -1,6 +1,6 @@
 {
   "name": "agent-workflow",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Written intent in, gated PR out. Task files, plan mode, completion gate, isolated test writer, three narrow reviewers, mistake-twice rule, status feed for a menu bar app.",
   "author": { "name": "Liam" }
 }
