@@ -1,0 +1,36 @@
+{
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [ { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/status-emit.sh", "async": true } ] }
+    ],
+    "PreToolUse": [
+      { "matcher": "Bash",
+        "hooks": [ { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/block-main-push.sh" } ] },
+      { "matcher": "Edit|Write|MultiEdit",
+        "hooks": [ { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/protect-tests-in-fix.sh" } ] },
+      { "matcher": "Task|Agent",
+        "hooks": [ { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/status-emit.sh", "async": true } ] }
+    ],
+    "PostToolUse": [
+      { "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/format-changed.sh" },
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/task-index.sh", "async": true }
+        ] },
+      { "matcher": ".*",
+        "hooks": [ { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/status-emit.sh", "async": true } ] }
+    ],
+    "Stop": [
+      { "hooks": [
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/stop-gate.sh", "timeout": 600 },
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/status-emit.sh", "async": true }
+        ] }
+    ],
+    "SubagentStop": [
+      { "hooks": [ { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/status-emit.sh", "async": true } ] }
+    ],
+    "Notification": [
+      { "hooks": [ { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/scripts/status-emit.sh", "async": true } ] }
+    ]
+  }
+}

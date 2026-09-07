@@ -1,0 +1,32 @@
+name: pr-checks
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  pr-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: __PM__ }
+      - run: __INSTALL__
+      - run: __TYPECHECK__
+      - run: __LINT__
+      - run: __TEST__
+      - name: Import rules
+        run: npx depcruise --config .dependency-cruiser.cjs __SRC_DIRS__
+      - name: Wiki lint
+        run: bash scripts/wiki-lint.sh
+      - name: Task file present for branch
+        run: |
+          ID="${GITHUB_HEAD_REF#task/}"
+          case "$GITHUB_HEAD_REF" in task/*) test -f "tasks/${ID}.md" || { echo "No tasks/${ID}.md"; exit 1; } ;; esac
+      - name: Fix tasks must not touch test files
+        run: |
+          case "$GITHUB_HEAD_REF" in task/*) ;; *) exit 0 ;; esac
+          ID="${GITHUB_HEAD_REF#task/}"
+          KIND=$(grep -m1 '^kind:' "tasks/${ID}.md" | awk '{print $2}')
+          if [ "$KIND" = "fix" ] && git diff --name-only origin/main...HEAD | grep -E '__TEST_REGEX__'; then
+            echo "Fix task modified test files. Fix the code, not the test."; exit 1
+          fi
