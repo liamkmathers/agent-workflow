@@ -1,6 +1,6 @@
 ---
 id: T-000
-kind: feature        # feature | fix | assess
+kind: feature        # feature | fix | chore (config/CI/docs only, no test-first)
 status: draft        # draft | accepted | in-progress | pr-open | merged
 source: docs/assessments/YYYY-MM-DD-name.md#C1   # or "chat" / issue URL
 ---

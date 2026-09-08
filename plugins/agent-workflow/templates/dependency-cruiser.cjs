@@ -1,3 +1,5 @@
+// Architecture as constraints. A PR that crosses one of these lines fails CI.
+// Edit the paths to match your layout. Run locally: npx depcruise --config .dependency-cruiser.cjs __SRC_DIRS__
 module.exports = {
   forbidden: [
     { name: 'no-circular', severity: 'error', from: {}, to: { circular: true } },

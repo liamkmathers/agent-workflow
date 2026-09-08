@@ -1,6 +1,6 @@
 #!/bin/bash
 # Writes one JSON line per lifecycle event to ~/.claude/status/<session>.jsonl.
-# Also: extracts NOTE: lines from the transcript into note events and tasks/<ID>.log.md,
+# Also: extracts lines starting with NOTE: from the transcript into note events (exported to tasks/<ID>.log.md by /pr),
 # reads plan.md step markers into a steps array, tags subagent events.
 . "$(dirname "$0")/lib.sh"
 INPUT=$(cat)
@@ -49,9 +49,8 @@ case "$EVENT" in
       OFF="$DIR/$SID${AGENT:+.$AGENT}.offset"; PREV=$(cat "$OFF" 2>/dev/null || echo 0); NOW=$(wc -l < "$T")
       if [ "$NOW" -gt "$PREV" ]; then
         tail -n +"$((PREV+1))" "$T" | jq -r 'select(.type=="assistant") | .message.content[]? | select(.type=="text") | .text' 2>/dev/null \
-          | grep -o 'NOTE:.*' | cut -c1-240 | while IFS= read -r N; do
+          | grep -E '^NOTE:' | cut -c1-240 | while IFS= read -r N; do
             emit note working "$N" "$AGENT"
-            [ -n "$ID" ] && printf -- "- %s %s%s\n" "$TS" "${AGENT:+[$AGENT] }" "$N" >> "$ROOT/tasks/$ID.log.md"
           done
         echo "$NOW" > "$OFF"
       fi

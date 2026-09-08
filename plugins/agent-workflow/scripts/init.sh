@@ -13,6 +13,7 @@ has() { if command -v jq >/dev/null; then jq -e --arg s "$1" '.scripts[$s]' pack
 TEST="__TEST__"; has test && TEST="$RUN test"
 LINT="__LINT__"; has lint && LINT="$RUN lint"
 TYPE="npx tsc --noEmit"; has typecheck && TYPE="$RUN typecheck"
+if grep -q '"next"' package.json 2>/dev/null && ! has typecheck; then TYPE="npx next typegen && npx tsc --noEmit"; fi
 if find . -path ./node_modules -prune -o -type d -name tests -print -o -type d -name __tests__ -print 2>/dev/null | grep -q .; then
   TEST_REGEX='(\.test\.|\.spec\.|__tests__/|^tests/)'; else TEST_REGEX='(\.test\.|\.spec\.)'; fi
 SRC=$(for d in app src lib components pages server; do [ -d "$d" ] && printf "%s " "$d"; done); SRC="${SRC% }"; : "${SRC:=src}"
@@ -35,6 +36,8 @@ put "$T/wiki/README.md" docs/wiki/README.md
 put "$T/wiki/module.md" docs/wiki/_module.md
 put "$T/wiki/decision.md" docs/wiki/_decision.md
 put "$T/rules/ui.md" .claude/rules/ui.md
+put "$T/scripts/pre-push" scripts/hooks/pre-push; chmod +x scripts/hooks/pre-push
+git config core.hooksPath scripts/hooks && echo "set    core.hooksPath=scripts/hooks (local pre-push refuses pushes to main)"
 mkdir -p docs/assessments/img
 if [ -f CLAUDE.md ] && grep -q '^## Workflow' CLAUDE.md; then echo "skip   CLAUDE.md workflow section (exists)"
 else cat "$T/CLAUDE.workflow.md" >> CLAUDE.md; echo "append CLAUDE.md workflow section"; fi

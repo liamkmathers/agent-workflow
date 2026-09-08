@@ -18,5 +18,8 @@ Generated files. Anything `npm run lint` or `tsc` already enforces. Formatting (
 ## Shadow mode
 Until 2026-10-06, review findings are comments only. No finding blocks a merge. Liam rates findings; after one month, Important findings from passes with under 20% false positives become required checks.
 
+## Pruning
+Monthly: read `## Things Claude gets wrong`, `.claude/rules/`, and the process gates listed in the plugin README. Delete any line or gate that has not fired in two months. Rules accumulate; deletion is the only counterweight.
+
 ## Feedback loop
 A finding that appears for the second time across PRs becomes a line in CLAUDE.md under "Things Claude gets wrong", added in the same PR that found it. Use `/lesson`.

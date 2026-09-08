@@ -38,6 +38,21 @@ Liam: file list vs expected ─► compliance comment ─► diff ─► approve
 /lesson on the second occurrence of any mistake
 ```
 
+## Gates: outcome vs process
+Outcome gates state facts about the code and stay permanent. Process gates encode today's failure modes; review them monthly (see REVIEW.md) and remove any that has not caught anything in two months.
+
+| Gate | Kind |
+|---|---|
+| Branch ruleset / local pre-push | outcome |
+| CI: tests, typecheck, lint, import rules | outcome |
+| Push, merge, approve block (Claude hook) | outcome |
+| Test freeze on fix tasks | outcome |
+| Mandatory plan mode before code | process |
+| Plan step markers `[~]` `[x]` | process |
+| `TASK COMPLETE` marker and stop gate | process |
+| Verify file required | process |
+| Three review passes | process (shadow mode first) |
+
 ## Layout
 ```
 .claude-plugin/marketplace.json

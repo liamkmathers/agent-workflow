@@ -12,6 +12,7 @@ jobs:
         with: { node-version: 20, cache: __PM__ }
       - run: __INSTALL__
       - run: __TYPECHECK__
+        shell: bash
       - run: __LINT__
       - run: __TEST__
       - name: Import rules

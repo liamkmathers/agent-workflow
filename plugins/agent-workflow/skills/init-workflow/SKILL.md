@@ -14,3 +14,4 @@ disable-model-invocation: true
    - GitHub → Settings → Rules → new ruleset on `main`: require PR with 1 approval, require status check `pr-checks`, block force push, no bypass.
    - Commit and push this scaffold to `main` once (the last direct push) so `pr-checks` exists, then select it in the ruleset.
    - `brew install jq gh` if missing.
+   - If the repo is private on GitHub Free, rulesets are not enforced. The local pre-push hook (`scripts/hooks/pre-push`, set via `core.hooksPath`) is the fallback; it refuses pushes to main from this machine.
