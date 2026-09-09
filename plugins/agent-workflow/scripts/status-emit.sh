@@ -61,7 +61,7 @@ case "$EVENT" in
     emit subagent_stop working "$LAST" "$AGENT" ;;
   Stop)
     T=$(echo "$INPUT" | jq -r '.transcript_path // ""'); LAST=$(last_texts "$T" 1 | cut -c1-160)
-    ST=idle; echo "$LAST" | grep -q "TASK COMPLETE" && ST=completed
+    ST=idle; last_texts "$T" 40 | grep -Eq "^TASK COMPLETE\s*$" && ST=completed
     emit stop "$ST" "$LAST" "" "{\"steps\":$STEPS}" ;;
   *) emit "$EVENT" working "" "$AGENT" ;;
 esac

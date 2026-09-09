@@ -16,4 +16,4 @@ Then:
 2. Set `status: pr-open` in the task file frontmatter. Use the Edit tool. Commit `tasks/<ID>.md`, `tasks/<ID>.log.md`, `tasks/INDEX.md` together.
 3. Push the branch. `gh pr create` using `.github/pull_request_template.md`: every criterion with its box state; Not done lists every unticked criterion and every file outside the expected list; the verifier report pasted in full; the log file linked under "Working notes".
 4. Invoke `review-bugs`, `review-security`, `review-compliance` with the task ID. Post each final message as a PR comment with `gh pr comment`.
-5. Say `TASK COMPLETE` followed by the PR URL. Stop. Do not merge. Do not approve. Do not address findings unless asked.
+5. Say `TASK COMPLETE` as its own line, then the PR URL on the next line. Do not write that phrase anywhere else, ever; the stop gate matches a line that is exactly that phrase. Stop. Do not merge. Do not approve. Do not address findings unless asked.

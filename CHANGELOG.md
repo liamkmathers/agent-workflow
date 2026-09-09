@@ -7,3 +7,9 @@
 - Workflow: honest-exit rule (wrong frozen test or wrong plan: stop, NOTE:, Not done, wait).
 - REVIEW.md: monthly pruning section. README: outcome vs process gate table.
 - init.sh: installs scripts/hooks/pre-push and sets core.hooksPath (fallback for private repos on GitHub Free, where rulesets are not enforced).
+
+# 0.1.3 (2026-09-09), from the T-002 run
+- Stop gate and status feed match only a line that is exactly TASK COMPLETE (was matching mentions of the phrase).
+- Verifier reads test/typecheck commands from .agent-workflow (was hardcoding npx tsc --noEmit).
+- Verifier: CI=1 and timeout 180 on every command, no servers, install first if node_modules is missing. Two verifier stalls at the 600s watchdog on fresh worktrees.
+- /pr and workflow: the completion phrase is written only as the final line of a real completion.

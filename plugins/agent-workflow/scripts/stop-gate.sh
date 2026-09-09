@@ -9,7 +9,7 @@ TASK=$(task_file); [ -f "$TASK" ] || exit 0
 ROOT=$(root)
 T=$(echo "$INPUT" | jq -r '.transcript_path // ""')
 LAST=$(last_texts "$T" 40)
-echo "$LAST" | grep -q "TASK COMPLETE" || exit 0
+echo "$LAST" | grep -Eq "^TASK COMPLETE\s*$" || exit 0
 
 FAIL=""
 TESTCMD=$(grep -m1 '^test:' "$ROOT/.agent-workflow" 2>/dev/null | cut -d: -f2- | xargs)

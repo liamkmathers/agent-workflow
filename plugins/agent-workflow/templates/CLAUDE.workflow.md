@@ -11,7 +11,7 @@
 9. `kind: chore` tasks (CI, config, docs): no test-first; the verifier still runs.
 10. If a frozen test or an approved plan turns out to be wrong, stop. Write a `NOTE:`, report it under Not done, and wait. Do not work around it.
 11. If the change makes a page in `docs/wiki/` false, fix that page in the same commit. New "why" decisions go through `/decide`.
-12. When done, invoke `verifier` with the task ID. Then run `/pr`. Then stop.
+12. When done, invoke `verifier` with the task ID. If it stalls or fails to write `tasks/<ID>.verify.md`, invoke it once more; if that also fails, report it under Not done and wait. Then run `/pr`. Then stop. Never write the completion phrase except as the last line of a real completion.
 13. Never push to main. Never merge. Never approve a PR. Never edit `tasks/<ID>.verify.md` by hand.
 
 ## Things Claude gets wrong
